@@ -3,6 +3,10 @@ mod iterators;
 
 use std::collections::HashMap;
 
+/// Dynamic programming example
+/// for an NxM matrix how many paths are there from top left to bottom right
+/// if you can "move" only right or down at each step?
+/// In this solution, we pre-compute (memoize) the answer, then just look it up
 pub fn paths(n: u32, m: u32) -> u64 {
     debug_assert_ne!(n, 0);
     debug_assert_ne!(m, 0);

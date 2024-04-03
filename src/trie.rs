@@ -1,3 +1,6 @@
+//! # Trie Example
+//! Implement a Trie data structure
+
 use std::collections::HashMap;
 
 pub struct Trie {
@@ -11,6 +14,18 @@ struct TrieNode {
     is_word: bool,
 }
 
+/// Initialize the Trie and find entries
+/// ```
+///         use rust_examples::trie;
+///         let mut trie = trie::Trie::new();
+///         trie.insert("hello");
+///         trie.insert("hell");
+///         trie.insert("help");
+///
+///         assert_eq!(trie.find("hell").unwrap(), "hell");
+///         assert_eq!(trie.find("hello").unwrap(), "hello");
+///         assert_eq!(trie.find("help").unwrap(), "help");
+///```
 impl Trie {
     pub fn new() -> Trie {
         Trie {
@@ -82,7 +97,6 @@ mod tests {
         assert_eq!(trie.find("hell").unwrap(), "hell");
         assert_eq!(trie.find("hello").unwrap(), "hello");
         assert_eq!(trie.find("help").unwrap(), "help");
-
     }
 
     #[test]
