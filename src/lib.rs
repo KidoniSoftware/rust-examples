@@ -11,7 +11,7 @@ pub fn paths(n: u32, m: u32) -> u64 {
     debug_assert_ne!(n, 0);
     debug_assert_ne!(m, 0);
 
-    let mut memo : HashMap<(u32, u32), u64> = HashMap::new();
+    let mut memo: HashMap<(u32, u32), u64> = HashMap::new();
 
     for i in 1..=n {
         memo.insert((i, 1), 1);
@@ -30,9 +30,48 @@ pub fn paths(n: u32, m: u32) -> u64 {
     memo[&(n, m)]
 }
 
+/// given two arrays that are sorted with distinct elements (i.e. no dupes in an array)
+/// find how many elements in common between the two.
+/// This impl runs in O(min(v1 size, v2 size)) since it iterates over the array elements
+/// at most the length of the smaller of the two
+fn common_elements(v1: Vec<i32>, v2: Vec<i32>) -> i32 {
+    let mut count = 0;
+    let mut idx1 = 0;
+    let mut idx2 = 0;
+
+    while idx1 < v1.len() && idx2 < v2.len() {
+        if v1[idx1] == v2[idx2] {
+            count += 1;
+            idx1 += 1;
+            idx2 += 1;
+        } else if v1[idx1] < v2[idx2] {
+            idx1 += 1;
+        } else if v1[idx1] > v2[idx2] {
+            idx2 += 1;
+        }
+    }
+
+    count
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_common_elements() {
+        let in1 = vec![1, 2, 4, 5, 8, 18, 21, 22];
+        let in2 = vec![2, 3, 8, 9, 11, 18, 19, 21, 29];
+        assert_eq!(common_elements(in1, in2), 4);
+
+        let in1 = vec![1];
+        let in2 = vec![];
+        assert_eq!(common_elements(in1, in2), 0);
+
+        let in1 = vec![];
+        let in2 = vec![1];
+        assert_eq!(common_elements(in1, in2), 0);
+    }
 
     #[test]
     fn base_case_grid() {
