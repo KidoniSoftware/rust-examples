@@ -1,4 +1,5 @@
 pub mod trie;
+mod iterators;
 
 use std::collections::HashMap;
 
