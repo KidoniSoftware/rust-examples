@@ -19,18 +19,8 @@ impl Trie {
     }
 
     pub fn insert(&mut self, word: &str) {
-        self.root.insert(word)
-    }
-
-    pub fn find(&self, word: &str) -> Option<String> {
-        self.root.find(word)
-    }
-}
-
-impl TrieNode {
-    fn insert(&mut self, word: &str) {
         if !word.is_empty() {
-            let mut current = self;
+            let mut current = &mut self.root;
 
             for c in word.chars() {
                 current = current.children.entry(c).or_insert(TrieNode::default());
@@ -43,9 +33,9 @@ impl TrieNode {
         }
     }
 
-    fn find(&self, word: &str) -> Option<String> {
+    pub fn find(&self, word: &str) -> Option<String> {
         if !word.is_empty() {
-            let mut current = self;
+            let mut current = &self.root;
 
             for c in word.chars() {
                 if let Some(trie) = current.children.get(&c) {
