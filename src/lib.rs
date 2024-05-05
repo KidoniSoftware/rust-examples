@@ -3,7 +3,7 @@ mod iterators;
 
 use std::collections::HashMap;
 
-/// Dynamic programming example
+/// Dynamic programming (using memoization) example
 /// for an NxM matrix how many paths are there from top left to bottom right
 /// if you can "move" only right or down at each step?
 /// In this solution, we pre-compute (memoize) the answer, then just look it up
