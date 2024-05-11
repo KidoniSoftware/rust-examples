@@ -1,6 +1,8 @@
 pub mod trie;
 mod iterators;
 
+mod math;
+
 use std::collections::HashMap;
 
 /// Dynamic programming (using memoization) example
