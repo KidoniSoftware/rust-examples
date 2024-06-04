@@ -29,7 +29,7 @@ struct TrieNode {
 impl Trie {
     pub fn new() -> Trie {
         Trie {
-            root: TrieNode::default()
+            root: TrieNode::default(),
         }
     }
 
@@ -55,9 +55,8 @@ impl Trie {
             for c in word.chars() {
                 if let Some(trie) = current.children.get(&c) {
                     current = trie;
-                }
-                else {
-                    return None
+                } else {
+                    return None;
                 }
             }
 

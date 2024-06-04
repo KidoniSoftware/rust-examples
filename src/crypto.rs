@@ -7,11 +7,11 @@ lazy_static! {
         const FREQ_DATA: &str = include_str!("freq.csv");
         let lines = FREQ_DATA.lines();
 
-        let mut frequencies : HashMap<char, f64> = HashMap::new();
+        let mut frequencies: HashMap<char, f64> = HashMap::new();
         lines.for_each(|x| {
-            let line : Vec<&str> = x.split(',').collect();
+            let line: Vec<&str> = x.split(',').collect();
             assert_eq!(2, line.len());
-            let k : char = unsafe { char::from(*line[0].as_ptr()) };
+            let k: char = unsafe { char::from(*line[0].as_ptr()) };
             frequencies.insert(k, line[1].parse().unwrap());
         });
 
@@ -27,11 +27,10 @@ pub fn to_base64(src: &[u8]) -> String {
     const PAD: char = '=';
     const MASK: u32 = 0x3F;
     static BASE64_CHARS: [char; 64] = [
-        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1',
+        '2', '3', '4', '5', '6', '7', '8', '9', '+', '/',
     ];
 
     let mut result = String::new();
@@ -46,21 +45,21 @@ pub fn to_base64(src: &[u8]) -> String {
     }
 
     /*    let remainder = chunks.remainder();
-        let rem = remainder.len();
-        if rem > 0 {
-            // rem can be only 1 or 2 since otherwise it would be a full chunk, handled above
+    let rem = remainder.len();
+    if rem > 0 {
+        // rem can be only 1 or 2 since otherwise it would be a full chunk, handled above
 
-            if rem == 1 {
-                result.push(BASE64_CHARS[((remainder[0] >> 6) as u32 & MASK) as usize]);
-                result.push(PAD);
-                result.push(PAD);
-            } else {
-                let combined = (remainder[0] as u32) << 8 | remainder[1] as u32;
-                result.push(BASE64_CHARS[(combined >> 6 & MASK) as usize]);
-                result.push(BASE64_CHARS[(combined & MASK) as usize]);
-                result.push(PAD);
-            }
-        }*/
+        if rem == 1 {
+            result.push(BASE64_CHARS[((remainder[0] >> 6) as u32 & MASK) as usize]);
+            result.push(PAD);
+            result.push(PAD);
+        } else {
+            let combined = (remainder[0] as u32) << 8 | remainder[1] as u32;
+            result.push(BASE64_CHARS[(combined >> 6 & MASK) as usize]);
+            result.push(BASE64_CHARS[(combined & MASK) as usize]);
+            result.push(PAD);
+        }
+    }*/
 
     result
 }
@@ -70,13 +69,13 @@ pub fn frequency(input: &str) -> HashMap<char, f64> {
 }
 
 pub fn frequency_bytes(input: &[u8]) -> HashMap<char, f64> {
-    const ALPHABET : &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     let mut calculated_frequencies: HashMap<char, f64> = HashMap::new();
 
     ALPHABET.chars().for_each(|c| {
         for b in input {
-            if (c as u8 ^ *b) == 0{
+            if (c as u8 ^ *b) == 0 {
                 let freq = calculated_frequencies.entry(c).or_insert(0.0);
                 let normalized_key = c.to_ascii_lowercase();
                 *freq += FREQ.get(&normalized_key).unwrap();
@@ -131,11 +130,11 @@ fn hex_char_to_hex_value(hex: char) -> u8 {
         '0'..='9' => (hex as u8) - b'0',
         'A'..='F' => (hex as u8) - b'A' + 10,
         'a'..='f' => (hex as u8) - b'a' + 10,
-        _ => panic!()
+        _ => panic!(),
     }
 }
 
-fn byte_to_hex_chars(b : u8) -> (char, char) {
+fn byte_to_hex_chars(b: u8) -> (char, char) {
     let hi = (b & 0xF0) >> 4;
     let low = b & 0x0F;
     (nib_to_char(hi), nib_to_char(low))
@@ -160,7 +159,7 @@ fn nib_to_char(n: u8) -> char {
         13 => 'D' as char,
         14 => 'E' as char,
         15 => 'F' as char,
-        _ => panic!()
+        _ => panic!(),
     }
 }
 
@@ -225,14 +224,18 @@ mod tests {
 
         let bytes = hex_string_to_bytes(input);
         if let Some(highest_frequency_key) = frequency_bytes(&bytes[..])
-            .into_iter().max_by(|(_, x), (_, x1)| {
-            x.total_cmp(x1)
-        }).map(|(k, _)| {
-            String::from(k)
-        }) {
+            .into_iter()
+            .max_by(|(_, x), (_, x1)| x.total_cmp(x1))
+            .map(|(k, _)| String::from(k))
+        {
             assert_eq!("x", highest_frequency_key);
 
-            let hex_string = bytes_to_hex_string(highest_frequency_key.to_ascii_uppercase().as_bytes().to_vec());
+            let hex_string = bytes_to_hex_string(
+                highest_frequency_key
+                    .to_ascii_uppercase()
+                    .as_bytes()
+                    .to_vec(),
+            );
             let result = xor_bytes(bytes, hex_string.as_bytes().to_vec());
             assert_eq!("Cooking MC's like a pound of bacon", result);
         }

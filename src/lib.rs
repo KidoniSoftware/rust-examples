@@ -1,10 +1,10 @@
 extern crate core;
 
-pub mod trie;
-mod iterators;
 mod crypto;
+mod iterators;
 mod math;
 mod sort;
+pub mod trie;
 
 use std::collections::HashMap;
 
