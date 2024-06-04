@@ -1,7 +1,10 @@
+extern crate core;
+
 pub mod trie;
 mod iterators;
-
+mod crypto;
 mod math;
+mod sort;
 
 use std::collections::HashMap;
 
