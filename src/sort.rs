@@ -26,11 +26,17 @@
 ///         assert!(expected.eq(&input));
 ///     }
 /// ```
-pub fn quick_sort(arr: &mut [i32]) {
+pub fn quick_sort<T>(arr: &mut [T])
+where
+    T: PartialOrd + Copy,
+{
     qsort(arr, 0, arr.len())
 }
 
-fn qsort(arr: &mut [i32], start: usize, end: usize) {
+fn qsort<T>(arr: &mut [T], start: usize, end: usize)
+where
+    T: PartialOrd + Copy,
+{
     assert!(end >= start);
     assert!(arr.len() >= (end - start));
 
@@ -41,7 +47,10 @@ fn qsort(arr: &mut [i32], start: usize, end: usize) {
     }
 }
 
-fn partition(arr: &mut [i32], start: usize, end: usize) -> usize {
+fn partition<T>(arr: &mut [T], start: usize, end: usize) -> usize
+where
+    T: PartialOrd + Copy,
+{
     let mut pivot = start;
     let mut left = start + 1;
     let mut right = end;
@@ -61,7 +70,10 @@ fn partition(arr: &mut [i32], start: usize, end: usize) -> usize {
 }
 
 #[allow(clippy::manual_swap)]
-fn swap(arr: &mut [i32], from: usize, to: usize) {
+fn swap<T>(arr: &mut [T], from: usize, to: usize)
+where
+    T: PartialOrd + Copy,
+{
     let tmp = arr[from];
     arr[from] = arr[to];
     arr[to] = tmp;
@@ -74,9 +86,45 @@ mod tests {
     use super::*;
 
     #[test]
-    fn sort() {
+    fn sort_i32() {
         let mut source = random::default(42);
         let mut input = source.iter().take(1000).collect::<Vec<i32>>();
+
+        do_sort(&mut input);
+    }
+
+    #[test]
+    fn sort_i8() {
+        let mut source = random::default(42);
+        let mut input = source.iter().take(1000).collect::<Vec<i8>>();
+
+        do_sort(&mut input);
+    }
+
+    #[test]
+    fn sort_u8() {
+        let mut source = random::default(42);
+        let mut input = source.iter().take(1000).collect::<Vec<u8>>();
+
+        do_sort(&mut input);
+    }
+
+    #[test]
+    fn sort_char() {
+        let mut source = random::default(42);
+        let mut input = source
+            .iter()
+            .take(1000)
+            .map(|x: u8| x as char)
+            .collect::<Vec<char>>();
+
+        do_sort(&mut input);
+    }
+
+    fn do_sort<T>(input: &mut Vec<T>)
+    where
+        T: Clone + Ord + Copy,
+    {
         let mut expected = input.clone();
         let expected = expected.as_mut_slice();
         expected.sort();
