@@ -3,6 +3,7 @@
 
 use std::collections::HashMap;
 
+#[derive(Default)]
 pub struct Trie {
     root: TrieNode,
 }
@@ -38,7 +39,7 @@ impl Trie {
             let mut current = &mut self.root;
 
             for c in word.chars() {
-                current = current.children.entry(c).or_insert(TrieNode::default());
+                current = current.children.entry(c).or_default();
             }
 
             current.value = String::from(word);
