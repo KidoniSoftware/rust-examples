@@ -1,12 +1,12 @@
 extern crate core;
 
-mod crypto;
-mod iterators;
-mod math;
-mod sort;
-pub mod trie;
-
 use std::collections::HashMap;
+
+pub mod crypto;
+pub mod iterators;
+pub mod math;
+pub mod sort;
+pub mod trie;
 
 /// Dynamic programming (using memoization) example
 /// for an NxM matrix how many paths are there from top left to bottom right

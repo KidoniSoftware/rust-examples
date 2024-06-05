@@ -1,3 +1,31 @@
+///
+///
+/// # Arguments
+///
+/// * `arr`: array to sort
+///
+/// returns: ()
+///
+/// ***array is sorted in place***
+///
+/// # Examples
+///
+/// ```
+///     use random::Source;
+///
+///     fn test() {
+///         let mut source = random::default(42);
+///         let mut input = source.iter().take(1000).collect::<Vec<i32>>();
+///         let mut expected = input.clone();
+///         let expected = expected.as_mut_slice();
+///         expected.sort();
+///
+///         let input = input.as_mut_slice();
+///         rust_examples::sort::quick_sort(input);
+///
+///         assert!(expected.eq(&input));
+///     }
+/// ```
 pub fn quick_sort(arr: &mut [i32]) {
     qsort(arr, 0, arr.len())
 }
@@ -32,6 +60,7 @@ fn partition(arr: &mut [i32], start: usize, end: usize) -> usize {
     pivot
 }
 
+#[allow(clippy::manual_swap)]
 fn swap(arr: &mut [i32], from: usize, to: usize) {
     let tmp = arr[from];
     arr[from] = arr[to];
@@ -49,10 +78,10 @@ mod tests {
         let mut source = random::default(42);
         let mut input = source.iter().take(1000).collect::<Vec<i32>>();
         let mut expected = input.clone();
-        let input = input.as_mut_slice();
         let expected = expected.as_mut_slice();
         expected.sort();
 
+        let input = input.as_mut_slice();
         quick_sort(input);
 
         assert!(expected.eq(&input));
